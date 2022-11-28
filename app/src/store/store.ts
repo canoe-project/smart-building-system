@@ -2,10 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 
 // import {} from "@store/airAtomics"
 import roomReducer from '@/store/roomReducer';
+import roomStateReducer from '@/store/roomStateReducer';
+import stateMaxReducer from '@/store/stateMaxReducer';
 
 export const store = configureStore({
   reducer: {
     roomReducer,
+    roomStateReducer,
+    stateMaxReducer,
   },
 });
 

@@ -1,8 +1,8 @@
-// type Props = {
-//   children: JSX.Element | JSX.Element[] | string | string[];
-// };
+import { useRouter } from "next/router";
+
 const Symbol = () => {
-  return <div className={`bg-chromatic-500 w-12 h-12 rounded m-2`}></div>;
+  const router = useRouter()
+  return <div className={`bg-chromatic-500 w-12 h-12 rounded m-2`} onClick={()=>{router.reload()}}></div>;
 };
 
 export { Symbol };

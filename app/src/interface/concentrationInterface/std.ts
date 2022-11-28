@@ -9,6 +9,17 @@ export interface Iconcentration {
   veryBad: number;
 }
 
+export interface IAirContent {
+  nameEN: string;
+  nameKR: string;
+  description: string;
+  unit: string;
+}
+
+export interface IAirContents extends IAirContent {
+  [key: string]: string;
+}
+
 export interface Iconcentrations extends Iconcentration {
   [key: string]: number;
 }

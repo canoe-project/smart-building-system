@@ -1,0 +1,32 @@
+{
+  "co2": {
+    "good": 450,
+    "average": 350,
+    "bad": 1000,
+    "veryBad": 2000
+  },
+  "humidity": {
+    "good": 20,
+    "average": 40,
+    "bad": 60,
+    "veryBad": 80
+  },
+  "temperature": {
+    "good": 20,
+    "average": 30,
+    "bad": 100,
+    "veryBad": 500
+  },
+  "light": {
+    "good": 200,
+    "average": 400,
+    "bad": 600,
+    "veryBad": 800
+  },
+  "pir": {
+    "good": 0,
+    "average": 0,
+    "bad": 30,
+    "veryBad": 30
+  }
+}

@@ -48,13 +48,13 @@ const DashBoard = () => {
 
   return (
     <div
-      className={`absolute flex w-full flex-col transition-opacity duration-700 ease-in-out ${
+      className={`absolute flex w-full h-full flex-col transition-opacity duration-700 ease-in-out ${
         hide ? 'opacity-0 -z-50 h-0' : 'opacity-100 z-50'
       } animate-[slideInLeft_1s_ease-in-out] bg-white overflow-auto overflow-x-hidden`}
     >
       <div className="flex flex-row items-center justify-between m-4">
-        <h1 className="text-2xl font-bold font-VarelaRound text-achromatic-500">
-          {roomState.room_name}
+        <h1 className="mt-4 ml-4 text-2xl font-bold font-NanumSquareRound text-achromatic-300">
+          {`${roomState.room_name} 호실`}
         </h1>
         <span
           onClickCapture={() => {
@@ -65,7 +65,7 @@ const DashBoard = () => {
           close
         </span>
       </div>
-      <div className="flex flex-row flex-wrap">
+      <div className="flex flex-row flex-wrap w-full h-full">
         <Chart
           dataType="co2"
           roomNumber={

@@ -3,7 +3,7 @@
 // };
 const Logo = () => {
   return (
-    <div className={`bg-achromatic-100 w-full h-12 rounded  m-2 flex-1`}></div>
+    <div className={`bg-achromatic-100 w-full h-12 rounded  m-2 flex-1`} onClick={()=>{router.reload()}}></div>
   );
 };
 

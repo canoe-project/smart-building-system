@@ -1,0 +1,32 @@
+{
+  "co2": {
+    "nameEN": "CO2",
+    "nameKR": "이산화탄소",
+    "description": "",
+    "unit": "ppm"
+  },
+  "humidity": {
+    "nameEN": "Humidity",
+    "nameKR": "습도",
+    "description": "",
+    "unit": "% RH"
+  },
+  "temperature": {
+    "nameEN": "Temperature",
+    "nameKR": "온도",
+    "description": "",
+    "unit": "℃"
+  },
+  "light": {
+    "nameEN": "Light",
+    "nameKR": "빛",
+    "description": "",
+    "unit": "밝기"
+  },
+  "pir": {
+    "nameEN": "PIR",
+    "nameKR": "PIR",
+    "description": "",
+    "unit": "PIR"
+  }
+}
