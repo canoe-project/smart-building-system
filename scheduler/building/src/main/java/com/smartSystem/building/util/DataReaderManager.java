@@ -56,13 +56,10 @@ public class DataReaderManager {
         ArrayList<RoomState> roomStateArrayList = new ArrayList<>();
         dataReaders.forEach(dataReader -> dataReader.run());
         dataReaders.forEach(dataReader -> {
-            System.out.println(dataReader.getIndex());
             RoomState roomState = new RoomState();
             Room room =new Room();
 
             room.setRoomName(dataReader.getRoomNumber());
-            room.setRoomState(roomState);
-
             roomState.setRoom(room);
             roomState.setCo2(dataReader.getCo2());
             roomState.setHumidity(dataReader.getHumidity());
@@ -70,7 +67,6 @@ public class DataReaderManager {
             roomState.setPir(dataReader.getPir());
             roomState.setTemperature(dataReader.getTemperature());
             roomStateArrayList.add(roomState);
-
         });
         return roomStateArrayList;
     }

@@ -17,7 +17,7 @@ import java.util.List;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Room> room =  new ArrayList<>();
@@ -42,11 +42,11 @@ public class Building {
         this.description = description;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

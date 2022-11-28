@@ -10,7 +10,6 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
-
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -18,23 +17,39 @@
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
-
-    "target": "es5",
+    "target": "ESNext",
     "outDir": "out",
     "declaration": true,
     "sourceMap": true,
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "jsx": "preserve",
     "noEmit": true,
     "isolatedModules": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["src/components/*"],
+      "@/core/*": ["src/core/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/interface/*": ["src/interface/*"],
+      "@/store/*": ["src/store/*"],
+      "@/section/*": ["src/section/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/svg/*": ["src/svg/*"]
+    }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/mesh/room/Room.tsx"
+  ]
 }

@@ -7,6 +7,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @DynamicInsert
@@ -16,11 +20,11 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "room_state_id")
-    private RoomState roomState;
+
+    @OneToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.ALL})
+    private Set<RoomState> roomState = new HashSet<>();
 
     @ManyToOne( cascade = {CascadeType.ALL})
     @JoinColumn(name = "building_id")
@@ -41,26 +45,27 @@ public class Room {
     public Room(){
     }
 
-    public Room(RoomState roomState, Building building, String roomName, String description) {
+    public Room(Set<RoomState> roomState, Building building, String roomName, String description) {
         this.roomState = roomState;
         this.building = building;
         this.roomName = roomName;
         this.description = description;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public RoomState getRoomState() {
+
+    public Set<RoomState> getRoomState() {
         return roomState;
     }
 
-    public void setRoomState(RoomState roomState) {
+    public void setRoomState(Set<RoomState> roomState) {
         this.roomState = roomState;
     }
 

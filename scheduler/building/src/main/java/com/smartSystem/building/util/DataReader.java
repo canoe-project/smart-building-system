@@ -3,14 +3,15 @@ package com.smartSystem.building.util;
 import java.io.IOException;
 import java.util.*;
 
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 
 import java.io.FileReader;
 
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 
 public class DataReader implements Runnable {
     private String fileName;
@@ -23,7 +24,7 @@ public class DataReader implements Runnable {
     private float temperature;
     private PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver;
     private Resource[] resources;
-    private HashMap<String, List<String[]>> table = new HashMap<String, List<String[]>>();
+    private HashMap<String, String> table = new HashMap<String, String>();
     void setUp() {
         pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
     }
@@ -33,20 +34,6 @@ public class DataReader implements Runnable {
         this.fileName = "data/KETI/" + roomNumber + "/*.csv";
         this.index = index;
         this.resources = pathMatchingResourcePatternResolver.getResources(this.fileName);
-
-
-        Arrays.stream(this.resources).forEach(resource -> {
-            try {
-                CSVReader reader = new CSVReader(new FileReader(resource.getFile()));
-                table.put(resource.getFilename(), reader.readAll());
-                reader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (CsvException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        System.out.println(roomNumber + " init");
     }
 
     public String getFileName() {
@@ -129,25 +116,43 @@ public class DataReader implements Runnable {
         this.resources = resources;
     }
 
-    public HashMap<String, List<String[]>> getTable() {
+    public HashMap<String, String> getTable() {
         return table;
     }
 
-    public void setTable(HashMap<String, List<String[]>> table) {
+    public void setTable(HashMap<String, String> table) {
         this.table = table;
     }
 
     @Override
     public void run() {
-        this.co2 = Float.parseFloat(this.table.get("co2.csv").get(this.index)[1]);
-        this.humidity = Float.parseFloat(this.table.get("humidity.csv").get(this.index)[1]);
-        this.light = Float.parseFloat(this.table.get("light.csv").get(this.index)[1]);
-        this.pir = Float.parseFloat(this.table.get("pir.csv").get(this.index)[1]);
-        this.temperature = Float.parseFloat(this.table.get("temperature.csv").get(this.index)[1]);
-        if (index + 1 == this.table.get("co2.csv").size())
-        {
-            this.index = 0;
-        }
+
+        Arrays.stream(this.resources).forEach(resource -> {
+            try {
+                CSVReader c = new CSVReaderBuilder(new FileReader(resource.getFile()))
+                        .withSkipLines(this.index)
+                        .build();
+
+                String[] line =  c.readNext();
+                if (line == null){
+                    this.index = 0;
+                    c = new CSVReaderBuilder(new FileReader(resource.getFile()))
+                            .withSkipLines(this.index)
+                            .build();
+                }
+                table.put(resource.getFilename(),line[1]);
+                c.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (CsvException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        this.co2 = Float.parseFloat(this.table.get("co2.csv"));
+        this.humidity = Float.parseFloat(this.table.get("humidity.csv"));
+        this.light = Float.parseFloat(this.table.get("light.csv"));
+        this.pir = Float.parseFloat(this.table.get("pir.csv"));
+        this.temperature = Float.parseFloat(this.table.get("temperature.csv"));
         this.index++;
     }
 

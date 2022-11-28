@@ -16,7 +16,7 @@ import java.util.Date;
 public class RoomState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     private Room room;
@@ -46,7 +46,7 @@ public class RoomState {
 
     }
 
-    public RoomState(long id, Room room, Float humidity, Float light, Float pir, Float temperature) {
+    public RoomState(int id, Room room, Float humidity, Float light, Float pir, Float temperature) {
         this.id = id;
         this.room = room;
         this.humidity = humidity;
@@ -55,11 +55,11 @@ public class RoomState {
         this.temperature = temperature;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

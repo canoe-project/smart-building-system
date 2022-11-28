@@ -30,24 +30,27 @@ public class RoomStateService {
     public void writeState(RoomState roomState, String roomNumber) throws Exception {
         Room room = roomRepository.findByRoomName(roomNumber);
         Building building= buildingRepository.findByBuildingName("admin");
-
         if (room == null)
         {
             Room curRoom = new Room();
             curRoom.setRoomName(roomNumber);
-            curRoom.setRoomState(roomState);
-
+            curRoom.getRoomState().add(roomState);
+            roomState.setRoom(curRoom);
             if (building == null){
                 building = new Building();
                 building.setBuildingName("admin");
                 building.setDescription("");
                 curRoom.setBuilding(building);
+                building.getRoom().add(curRoom);
+
+            }else {
+                curRoom.setBuilding(building);
+                building.getRoom().add(curRoom);
             }
-            roomState.setRoom(curRoom);
-            roomRepository.save(curRoom);
+            buildingRepository.save(building);
         }
         else {
-            room.setRoomState(roomState);
+            room.getRoomState().add(roomState);
             roomState.setRoom(room);
             roomRepository.save(room);
         }

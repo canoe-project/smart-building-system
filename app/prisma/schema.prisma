@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model building {
+  id            Int             @id @default(autoincrement())
+  building_name String?         @db.VarChar(255)
+  created_date  DateTime?       @db.DateTime(0)
+  description   String?         @db.VarChar(255)
+  modified_date DateTime?       @db.DateTime(0)
+  building_room building_room[]
+  room          room[]
+}
+
+model building_room {
+  building_id Int
+  room_id     Int      @unique(map: "UK_26kugt7i8c21riqpch6ubp0qg")
+  building    building @relation(fields: [building_id], references: [id], onUpdate: Restrict, map: "FK8gx0ovj9b29au8l8bl67fi8o6")
+  room        room     @relation(fields: [room_id], references: [id], onUpdate: Restrict, map: "FKasrtt0wevouned6pmi6t72teu")
+
+  @@index([building_id], map: "FK8gx0ovj9b29au8l8bl67fi8o6")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model hibernate_sequence {
+  next_val BigInt?
+
+  @@ignore
+}
+
+model room {
+  id                                  Int               @id @default(autoincrement())
+  created_date                        DateTime?         @db.DateTime(0)
+  description                         String?           @db.VarChar(255)
+  modified_date                       DateTime?         @db.DateTime(0)
+  room_name                           String?           @db.VarChar(255)
+  building_id                         Int?
+  building                            building?         @relation(fields: [building_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK4kmfw73x2vpfymk0ml875rh2q")
+  building_room                       building_room?
+  room_room_state                     room_room_state[]
+  room_state_roomToroom_state_room_id room_state[]      @relation("roomToroom_state_room_id")
+
+  @@index([building_id], map: "FK4kmfw73x2vpfymk0ml875rh2q")
+}
+
+model room_state {
+  id                            Int              @id @default(autoincrement())
+  co2                           Float?           @db.Float
+  created_date                  DateTime?        @db.DateTime(0)
+  humidity                      Float?           @db.Float
+  light                         Float?           @db.Float
+  modified_date                 DateTime?        @db.DateTime(0)
+  pir                           Float?           @db.Float
+  temperature                   Float?           @db.Float
+  room_id                       Int?
+  room_roomToroom_state_room_id room?            @relation("roomToroom_state_room_id", fields: [room_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKn82i65k48mw65smqr5xy2j64s")
+  room_room_state               room_room_state?
+
+  @@index([room_id], map: "FKn82i65k48mw65smqr5xy2j64s")
+}
+
+model room_room_state {
+  room_id       Int
+  room_state_id Int        @unique(map: "UK_hmhqhtsa76ygf3o1834jxrbrw")
+  room          room       @relation(fields: [room_id], references: [id], onUpdate: Restrict, map: "FK308ln4jftqeng2lq6b3doap0w")
+  room_state    room_state @relation(fields: [room_state_id], references: [id], onUpdate: Restrict, map: "FKo696k87f2b9ng108vowltmxir")
+
+  @@id([room_id, room_state_id])
+}
